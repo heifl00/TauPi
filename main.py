@@ -1,14 +1,12 @@
 # Import Library
 from machine import Pin, I2C
 import time
-import network
 import ubot
 import secrets
 import bme280_data
 import taupunktberechnung
 import onboard_T
 import wifi
-import uasyncio as asyncio
 
 ##########################################################################################################
 
