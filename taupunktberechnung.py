@@ -4,15 +4,15 @@ import onboard_T
 import math
 from time import sleep
 
-def Taupunkttemperatur(T, P):
+def Taupunkttemperatur(RT, rF):
     """
     Calculates the dew point temperature from the onboard temperature
     of the Pico and the humidity measured by the BME
     """
-    return (237.3 * (math.log10((P / 100 * (6.1079 * 10**((7.5 * T) /
-            (237.3 + T))))/ 6.1078)))/(7.5
-            - (math.log10((P / 100
-            * (6.1079 * 10**((7.5 * T) / (237.3 + T))))/ 6.1078))) 
+    return (237.3 * (math.log10((rF / 100 * (6.1079 * 10**((7.5 * RT) /
+            (237.3 + RT))))/ 6.1078)))/(7.5
+            - (math.log10((rF / 100
+            * (6.1079 * 10**((7.5 * RT) / (237.3 + RT))))/ 6.1078))) 
 
 def SchiPi():
     """
@@ -24,12 +24,12 @@ def SchiPi():
     than the dew point temperature, the truth value True is returned.
     """
     # data request from Pico
-    T = onboard_T.temp()
+    RT = onboard_T.temp()
     # data request from BME280
     OT = bme280_data.bme280_temp()
-    P = bme280_data.bme280_humi()
+    rF = bme280_data.bme280_humi()
     
     # Taupunktberechnung
-    TP_temp = Taupunkttemperatur(T, P)
+    TP_temp = Taupunkttemperatur(RT, rF)
     
-    return [T, P, OT, TP_temp, (TP_temp < OT)]
+    return [RT, rF, OT, TP_temp, (TP_temp < OT)]
